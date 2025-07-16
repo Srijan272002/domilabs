@@ -25,7 +25,7 @@ An AI-powered backend service that optimizes maritime operations through intelli
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - Docker & Docker Compose
 - PostgreSQL (if running locally)
 
@@ -83,7 +83,7 @@ An AI-powered backend service that optimizes maritime operations through intelli
    # Seed with sample data
    npm run seed
    ```
-
+   
 4. **Start the development server**
    ```bash
    npm run dev
@@ -752,6 +752,6 @@ The application includes comprehensive health checks:
 
 MIT License - see LICENSE file for details
 
----
+--- 
 
 For detailed AI model documentation, see [AI_MODELS_README.md](./AI_MODELS_README.md). 
