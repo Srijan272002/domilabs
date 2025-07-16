@@ -1,0 +1,117 @@
+### Health Check
+GET http://localhost:3000/health
+
+### Route Optimization
+POST http://localhost:3000/api/v1/ai/route/optimize
+Content-Type: application/json
+
+{
+  "origin": {
+    "latitude": 40.7128,
+    "longitude": -74.0060
+  },
+  "destination": {
+    "latitude": 51.5074,
+    "longitude": -0.1278
+  },
+  "shipSpecs": {
+    "maxSpeed": 25,
+    "fuelCapacity": 5000,
+    "cargoCapacity": 1000,
+    "currentCargoWeight": 600
+  },
+  "weatherConditions": {
+    "windSpeed": 15,
+    "waveHeight": 2.5,
+    "visibility": 8,
+    "temperature": 20
+  },
+  "preferences": {
+    "prioritizeFuel": true,
+    "prioritizeTime": false,
+    "avoidRoughSeas": true
+  }
+}
+
+### Fuel Consumption Prediction
+POST http://localhost:3000/api/v1/ai/fuel/predict
+Content-Type: application/json
+
+{
+  "voyage": {
+    "distance": 3000,
+    "duration": 120,
+    "averageSpeed": 22
+  },
+  "ship": {
+    "type": "container",
+    "length": 300,
+    "beam": 45,
+    "displacement": 50000,
+    "enginePower": 25000,
+    "maxSpeed": 25,
+    "cargoWeight": 35000,
+    "cargoCapacity": 50000
+  },
+  "conditions": {
+    "windSpeed": 20,
+    "windDirection": 45,
+    "waveHeight": 3,
+    "currentSpeed": 2,
+    "currentDirection": 90,
+    "temperature": 18,
+    "seaState": 4
+  },
+  "operational": {
+    "cruisingSpeed": 22,
+    "loadFactor": 0.7,
+    "mainEngineLoad": 0.8,
+    "auxiliaryLoad": 0.6,
+    "hvacLoad": 0.4
+  }
+}
+
+### Maintenance Prediction
+POST http://localhost:3000/api/v1/ai/maintenance/predict
+Content-Type: application/json
+
+{
+  "ship": {
+    "id": "1",
+    "type": "container",
+    "age": 5,
+    "totalOperatingHours": 35000
+  },
+  "component": {
+    "type": "main_engine",
+    "installDate": "2020-01-01",
+    "lastMaintenance": "2023-06-15"
+  },
+  "usage": {
+    "operatingHours": 2500,
+    "loadFactor": 0.75,
+    "environmentalStress": "moderate"
+  }
+}
+
+### Fleet Health Analysis
+POST http://localhost:3000/api/v1/ai/fleet/health
+Content-Type: application/json
+
+{
+  "maintenanceInputs": [
+    {
+      "shipId": "1",
+      "components": ["main_engine", "auxiliary_engine", "propeller"],
+      "timeframe": "6months"
+    },
+    {
+      "shipId": "2",
+      "components": ["main_engine", "auxiliary_engine", "propeller"],
+      "timeframe": "6months"
+    }
+  ]
+}
+
+### AI Service Status
+GET http://localhost:3000/api/v1/ai/status 

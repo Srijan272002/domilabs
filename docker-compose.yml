@@ -1,0 +1,68 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ship-planning-db
+    environment:
+      POSTGRES_DB: ship_planning
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - ship-planning-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: ship-planning-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ship-planning-network
+
+  # Main Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ship-planning-api
+    env_file: .env
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/ship_planning
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ship_planning
+      DB_USER: postgres
+      DB_PASSWORD: password
+      WEATHER_API_KEY: ${WEATHER_API_KEY}
+      WEATHER_API_URL: ${WEATHER_API_URL}
+      AI_AUTO_TRAIN: ${AI_AUTO_TRAIN}
+      AI_PERFORMANCE_THRESHOLD: ${AI_PERFORMANCE_THRESHOLD}
+      AI_MODEL_UPDATE_INTERVAL: ${AI_MODEL_UPDATE_INTERVAL}
+      AI_ENABLE_VERSIONING: ${AI_ENABLE_VERSIONING}
+      AI_MAX_MODEL_VERSIONS: ${AI_MAX_MODEL_VERSIONS}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./logs:/app/logs
+      - ./models:/app/models
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ship-planning-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  ship-planning-network:
+    driver: bridge 

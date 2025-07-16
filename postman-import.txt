@@ -1,0 +1,183 @@
+{
+  "info": {
+    "name": "Ship Planning API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "AI Services",
+      "item": [
+        {
+          "name": "Route Optimization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/ai/route/optimize",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "ai", "route", "optimize"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": {\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n  },\n  \"destination\": {\n    \"latitude\": 51.5074,\n    \"longitude\": -0.1278\n  },\n  \"shipSpecs\": {\n    \"maxSpeed\": 25,\n    \"fuelCapacity\": 5000,\n    \"cargoCapacity\": 1000,\n    \"currentCargoWeight\": 600\n  },\n  \"weatherConditions\": {\n    \"windSpeed\": 15,\n    \"waveHeight\": 2.5,\n    \"visibility\": 8,\n    \"temperature\": 20\n  },\n  \"preferences\": {\n    \"priority\": \"fuel_efficiency\",\n    \"avoidWeather\": true,\n    \"maxWaveHeight\": 5\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Fuel Prediction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/ai/fuel/predict",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "ai", "fuel", "predict"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"voyage\": {\n    \"distance\": 3000,\n    \"duration\": 120,\n    \"averageSpeed\": 22\n  },\n  \"ship\": {\n    \"type\": \"container\",\n    \"length\": 300,\n    \"beam\": 45,\n    \"displacement\": 50000,\n    \"enginePower\": 25000,\n    \"maxSpeed\": 25,\n    \"cargoWeight\": 35000,\n    \"cargoCapacity\": 50000\n  },\n  \"conditions\": {\n    \"windSpeed\": 20,\n    \"windDirection\": 45,\n    \"waveHeight\": 3,\n    \"currentSpeed\": 2,\n    \"currentDirection\": 90,\n    \"temperature\": 18,\n    \"seaState\": 4\n  },\n  \"operational\": {\n    \"cruisingSpeed\": 22,\n    \"loadFactor\": 0.7,\n    \"mainEngineLoad\": 0.8,\n    \"auxiliaryLoad\": 0.6,\n    \"hvacLoad\": 0.4\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Maintenance Prediction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/ai/maintenance/predict",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "ai", "maintenance", "predict"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ship\": {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n    \"type\": \"container\",\n    \"age\": 5,\n    \"totalOperatingHours\": 35000\n  },\n  \"component\": {\n    \"type\": \"main_engine\",\n    \"installDate\": \"2020-01-01\",\n    \"lastMaintenance\": \"2023-06-15\"\n  },\n  \"usage\": {\n    \"operatingHours\": 2500,\n    \"loadFactor\": 0.75,\n    \"environmentalStress\": \"moderate\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "AI Service Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/v1/ai/status",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "ai", "status"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Maintenance",
+      "item": [
+        {
+          "name": "Get Maintenance Alerts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/v1/maintenance/alerts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "maintenance", "alerts"]
+            }
+          }
+        },
+        {
+          "name": "Create Maintenance Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/maintenance/alerts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "maintenance", "alerts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipId\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"component\": \"engine\",\n  \"alertType\": \"preventive\",\n  \"priority\": \"high\",\n  \"description\": \"Engine maintenance required\",\n  \"estimatedCost\": 5000,\n  \"scheduledDate\": \"2024-02-01T10:00:00Z\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Voyages",
+      "item": [
+        {
+          "name": "Plan Voyage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/voyages/plan",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "voyages", "plan"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": {\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n  },\n  \"destination\": {\n    \"latitude\": 51.5074,\n    \"longitude\": -0.1278\n  },\n  \"shipId\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"departureTime\": \"2024-02-01T10:00:00Z\",\n  \"preferences\": {\n    \"priority\": \"fuel_efficiency\",\n    \"avoidWeather\": true,\n    \"maxWaveHeight\": 5\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Voyage Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/v1/voyages/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "voyages", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 

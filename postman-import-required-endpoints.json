@@ -1,0 +1,175 @@
+{
+  "info": {
+    "name": "Ship Planning API - Required Endpoints",
+    "description": "Postman collection for the 4 required API endpoints from the assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Plan Voyage",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": {\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n  },\n  \"destination\": {\n    \"latitude\": 51.5074,\n    \"longitude\": -0.1278\n  },\n  \"shipId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"departureTime\": \"2024-03-20T10:00:00Z\",\n  \"preferences\": {\n    \"prioritizeFuel\": true,\n    \"prioritizeTime\": false,\n    \"avoidRoughSeas\": true,\n    \"preferredSpeed\": 22\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/voyages/plan",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "voyages", "plan"]
+        },
+        "description": "Plan a new voyage with optimized route. Accepts origin, destination, departure time, weather forecast, and cargo load. Returns optimized route plan with ETA, speed schedule, and expected fuel use."
+      }
+    },
+    {
+      "name": "Get Plan History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/voyages/history?page=1&limit=10&sortBy=createdAt&sortOrder=desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "voyages", "history"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Page number for pagination"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "Number of records per page"
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt",
+              "description": "Field to sort by"
+            },
+            {
+              "key": "sortOrder",
+              "value": "desc",
+              "description": "Sort order (asc/desc)"
+            },
+            {
+              "key": "status",
+              "value": "",
+              "description": "Filter by status (planned, in_progress, completed, cancelled, delayed)",
+              "disabled": true
+            },
+            {
+              "key": "shipId",
+              "value": "",
+              "description": "Filter by ship ID",
+              "disabled": true
+            },
+            {
+              "key": "startDate",
+              "value": "",
+              "description": "Filter by start date (ISO format)",
+              "disabled": true
+            },
+            {
+              "key": "endDate",
+              "value": "",
+              "description": "Filter by end date (ISO format)",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Lists past plans with actuals vs predicted metrics. Supports pagination, filtering, and sorting."
+      }
+    },
+    {
+      "name": "Add Voyage Feedback",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rating\": 4,\n  \"comments\": \"Good voyage overall, weather was favorable\",\n  \"issues\": [\"navigation\", \"other\"],\n  \"actualFuelConsumption\": 2800,\n  \"actualDuration\": 115\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/voyages/{{voyageId}}/feedback",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "voyages", "{{voyageId}}", "feedback"]
+        },
+        "description": "Accepts feedback from actual voyage (actual fuel used, deviations, time taken) for learning purposes. Updates voyage with actual metrics."
+      }
+    },
+    {
+      "name": "Get Maintenance Alerts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/maintenance/alerts?page=1&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "maintenance", "alerts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Page number for pagination"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "Number of records per page"
+            },
+            {
+              "key": "shipId",
+              "value": "",
+              "description": "Filter by ship ID",
+              "disabled": true
+            },
+            {
+              "key": "priority",
+              "value": "",
+              "description": "Filter by priority (low, medium, high, critical)",
+              "disabled": true
+            },
+            {
+              "key": "status",
+              "value": "",
+              "description": "Filter by status (scheduled, in_progress, completed, cancelled, overdue)",
+              "disabled": true
+            },
+            {
+              "key": "overdue",
+              "value": "",
+              "description": "Filter overdue maintenance (true/false)",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Suggests proactive maintenance windows based on usage analytics. Returns maintenance alerts with ship details and priority levels."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Base URL for the API server"
+    },
+    {
+      "key": "voyageId",
+      "value": "voyage-001",
+      "type": "string",
+      "description": "Voyage ID for feedback endpoint (replace with actual voyage ID)"
+    }
+  ]
+} 
